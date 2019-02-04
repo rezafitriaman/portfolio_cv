@@ -1,0 +1,101 @@
+.button {
+	display: inline-block;
+	min-width: 135px;
+	max-width: 250px;
+	margin: 0.5em;
+	padding: 1em 2em;
+	border: none;
+	background: none;
+	color: white;
+	vertical-align: middle;
+	position: relative;
+	z-index: 1;
+	-webkit-backface-visibility: hidden;
+	-moz-osx-font-smoothing: grayscale;
+}
+.button:focus {
+	outline: none;
+}
+
+.button--round-l {
+	border-radius: 40px;
+}
+.button--text-medium {
+	font-family: $font-head;
+	font-weight: 700;
+}
+
+.button--cv, .button--cv-2 {
+	background: none;
+	border: none;
+	height: 60px;
+
+}
+
+.button--cv::before,
+.button--cv::after,
+.button--cv-2::before,
+.button--cv-2::after,
+.button--orange::before,
+.button--orange::after {
+	content: '';
+	z-index: -1;
+	border-radius: inherit;
+	pointer-events: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	-webkit-backface-visibility: hidden;
+	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+	transition: transform 0.3s, opacity 0.3s;
+	-webkit-transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
+	transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
+}
+
+.button--cv::after {
+    background: $darkBlue;
+}
+
+.button--cv::before {
+	border: 5px solid $darkBlue;
+	opacity: 0;
+	-webkit-transform: scale3d(1.2, 1.2, 1);
+	transform: scale3d(1.2, 1.2, 1);
+}
+
+.button--orange::after {
+    background: $orange;
+}
+
+.button--orange::before {
+	border: 5px solid $orange;
+	opacity: 0;
+	-webkit-transform: scale3d(1.2, 1.2, 1);
+	transform: scale3d(1.2, 1.2, 1);
+}
+
+.button--cv:hover::before, .button--cv-2:hover::before, .button--orange:hover::before {
+	opacity: 1;
+	-webkit-transform: scale3d(1, 1, 1);
+	transform: scale3d(1, 1, 1);
+}
+
+.button--cv:hover::after, .button--cv-2:hover::after, .button--orange:hover::after {
+	opacity: 0;
+	-webkit-transform: scale3d(0.8, 0.8, 1);
+	transform: scale3d(0.8, 0.8, 1);
+}
+
+.button--cv-2::after {
+    background: $lightBlue;
+}
+
+.button--cv-2::before {
+	border: 5px solid $lightBlue;
+	opacity: 0;
+	-webkit-transform: scale3d(1.2, 1.2, 1);
+	transform: scale3d(1.2, 1.2, 1);
+}
+

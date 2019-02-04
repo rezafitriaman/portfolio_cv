@@ -1,0 +1,57 @@
+{
+  "name": "portfolio_cv",
+  "version": "1.0.0",
+  "description": "portfolio cv reza fitriaman",
+  "main": "gulpfile.js",
+  "scripts": {
+    "start": "gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rezafitriaman/portfolio_cv.git"
+  },
+  "keywords": [
+    "portfolio",
+    "cv",
+    "Reza",
+    "Fitriaman"
+  ],
+  "author": "RezDesign",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rezafitriaman/portfolio_cv/issues"
+  },
+  "homepage": "https://github.com/rezafitriaman/portfolio_cv#readme",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@fortawesome/fontawesome-free": "^5.6.3",
+    "@types/gsap": "^1.20.1",
+    "@types/jquery": "^3.3.28",
+    "acorn": "^6.0.7",
+    "babelify": "^10.0.0",
+    "bootstrap": "^4.2.1",
+    "browser-sync": "^2.26.3",
+    "browserify": "^16.2.3",
+    "gsap": "^2.0.2",
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-image": "^4.4.1",
+    "gulp-minify": "^3.1.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-typescript": "^5.0.0",
+    "jquery": "^3.3.1",
+    "node-sass": "^4.11.0",
+    "popper.js": "^1.14.6",
+    "segment-js": "^1.1.2",
+    "tether": "^1.4.5",
+    "tsify": "^4.0.1",
+    "typescript": "^3.2.2",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0",
+    "watchify": "^3.11.0"
+  }
+}

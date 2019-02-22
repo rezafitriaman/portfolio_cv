@@ -19,34 +19,11 @@ const paths = {
     pages: ['src/*.html']
 };
 
-/*const port = 3000;
-const watch = () => {
-	browserSync.init({
-        server: {
-			baseDir: 'dist',
-			proxy: "grqbge-nwx7013:3000",
-			port: port
-		}
-    });
-
-	gulp.watch(jsFiles, gulp.series('typescript'))
-
-
-	gulp.watch(scssFiles, gulp.series('sass'))
-		.on('change', reload);
-
-	gulp.watch(htmlFiles, gulp.parallel('html'))
-		.on('change', reload);
-
-	gulp.watch(imageFiles, gulp.parallel('image'))
-		.on('change', reload);
-}*/
-
 sass.compiler = require('node-sass');
 
 //custom JS
 const jsFiles = [
-	'src/js/*.ts'
+	'src/js/main.ts'
 ]
 
 //custom SCSS
@@ -64,7 +41,8 @@ const scssFiles = [
 
 //custom HTML
 const htmlFiles = [
-	'src/*.html'
+	'src/index.html',
+	'src/tutorials.html'
 ]
 
 //vendor file CSS
@@ -100,57 +78,100 @@ const deleteAll = [
 	'dist'
 ]
 
-//task
-/*gulp.task('image', function () {
+/*
+==========================
+WATCH 6
+==========================
+*/
+
+const port = 3000;
+const watch = () => {
+	browserSync.init({
+        server: {
+			baseDir: 'dist',
+			proxy: "grqbge-nwx7013:3000",
+			port: port
+		}
+    });
+
+    /*
+	==========================
+	WATCH 6
+	==========================
+	*/
+
+	watchedBrowserify.on("update", js_utility);
+
+	gulp.watch(scssFiles, gulp.series('sass'))
+		.on('change', reload);
+
+	gulp.watch(htmlFiles, gulp.parallel('html'))
+		.on('change', reload);
+
+	gulp.watch(imageFiles, gulp.parallel('image'))
+		.on('change', reload);
+}
+
+/*
+==========================
+IMAGE 5
+==========================
+*/
+
+gulp.task('image', function () {
 	return gulp.src(imageFiles)
     .pipe(image())
     .pipe(gulp.dest('dist/image'))
-});*/
-
-//delted -------------------------------
-/*gulp.task('typescript',  () => {
-    return gulp.src(jsFiles)
-    	.pipe(plumber())
-	  	.pipe(sourcemaps.init())
-        .pipe(ts({
-            noImplicitAny: false,
-        	target: "es2015",
-        	module: "none"
-        }))
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('dist/js'))
-});*/
-//delted -------------------------------
-
-/*gulp.task('typescript',  () => {
-    return browserify({
-        basedir: '.',
-        debug: true,
-        entries: ['src/js/main.ts'],
-        cache: {},
-        packageCache: {}
-    })
-    .plugin(tsify)
-    .bundle()
-    .pipe(source('main.js'))
-    .pipe(gulp.dest("dist/js"))
     .pipe(browserSync.stream());
 });
 
-gulp.task('vendor:js', function() {
-    return gulp.src(jsVendorFiles)
-        .pipe(gulp.dest("dist/js"))
-});
+/*
+==========================
+BROWSER 4
+==========================
+*/
+
+gulp.task('browser', gulp.series('image', watch));
+
+/*
+==========================
+VENDOR:WEBFONTS 4
+==========================
+*/
 
 gulp.task('vendor:webfonts', function() {
     return gulp.src(webfontsVendor)
         .pipe(gulp.dest("dist/webfonts"))
 });
 
-gulp.task('vendor:css', function() {
-    return gulp.src(cssVendorFiles)
-        .pipe(gulp.dest("dist/css"))
+/*
+==========================
+VENDOR:JS 4
+==========================
+*/
+
+gulp.task('vendor:js', function() {
+    return gulp.src(jsVendorFiles)
+        .pipe(gulp.dest("dist/js"))
 });
+
+/*
+==========================
+HTML 4
+==========================
+*/
+
+gulp.task('html', () => {
+	return gulp.src(htmlFiles)
+		.pipe(gulp.dest('dist'))
+		.pipe(browserSync.stream());
+});
+
+/*
+==========================
+SASS 4
+==========================
+*/
 
 gulp.task('sass', () => {
   	return gulp.src(scssFiles)
@@ -164,78 +185,83 @@ gulp.task('sass', () => {
 	    .pipe(sass.sync().on('error', sass.logError))
 	    .pipe(sourcemaps.write('.'))
 	    .pipe(gulp.dest('dist/css'))
+	    .pipe(browserSync.stream());
 });
 
-gulp.task('html', () => {
-	return gulp.src(htmlFiles)
-		.pipe(gulp.dest('dist'));
-});
-
-gulp.task('clean:all', () => {
-	return del(deleteAll);
-});*/
-
-//watch
-/*gulp.task('browser', gulp.series('image', watch));*/
-
-//serve
-/*gulp.task('serve', gulp.series(
-	'clean:all', 
-	gulp.parallel(
-		'typescript', 
-		'sass',
-		'html',
-		'vendor:js',
-		'vendor:webfonts',
-		'browser',
-	)
-));*/
-
-//default
-/*gulp.task('default', gulp.series('serve'));*/
+/*
+==========================
+js_utility 4
+==========================
+*/
 
 const watchedBrowserify = watchify(browserify({
     basedir: '.',
     debug: true,
-    entries: ['src/js/main.ts'],
+    entries: jsFiles,
     cache: {},
     packageCache: {}
 	})
-	.plugin(tsify, { 
-			"files": [
-	        	"src/main.ts"
-	    	],
-	    	"compilerOptions": {
-	        	"noImplicitAny": true,
-	        	"target": "es2015"
-	    }
-	})
+	.plugin(tsify)
 	.transform("babelify", {
-		presets: ["@babel/preset-env"],
+		presets: [
+		    [
+		      "@babel/preset-env",
+		      {
+		        useBuiltIns: "entry"
+		      }
+		    ]
+		],
 		extensions: ['.ts']
 	})
 );
 
-const bundle = () => {
-	console.log('bundel')
+const js_utility = () => {
     return watchedBrowserify
         .bundle()
         .pipe(source('bundle.js'))
         .pipe(buffer())
 	    .pipe(sourcemaps.init({loadMaps: true}))
 	    .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest("dist/js"));
+        .pipe(gulp.dest("dist/js"))
+        .pipe(browserSync.stream());
 }
 
+/*
+==========================
+CLEAN:ALL 3
+==========================
+*/
 
-gulp.task("copy-html", function () {
-    return gulp.src(paths.pages)
-        .pipe(gulp.dest("dist"));
+
+gulp.task('clean:all', () => {
+	return del(deleteAll);
 });
 
-gulp.task('default', gulp.series('copy-html', bundle));
-watchedBrowserify.on("update", bundle);
+/*
+==========================
+SERVE 2
+==========================
+*/
 
+gulp.task('serve', gulp.series(
+	'clean:all', 
+	gulp.parallel(
+		js_utility, 
+		'sass',
+		'html',
+		'vendor:js',
+		'vendor:webfonts',
+		'browser',
+	)
+));
+
+/*
+==========================
+DEFAULT 1
+==========================
+*/
+
+gulp.task('default', gulp.series('serve'));
 
 
 

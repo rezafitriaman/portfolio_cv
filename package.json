@@ -34,6 +34,7 @@
     "bootstrap": "^4.2.1",
     "browser-sync": "^2.26.3",
     "browserify": "^16.2.3",
+    "del": "^5.1.0",
     "gsap": "^2.0.2",
     "gulp": "^4.0.0",
     "gulp-autoprefixer": "^6.0.0",
@@ -56,12 +57,12 @@
   },
   "babel": {
     "presets": [
-        [
-          "@babel/preset-env",
-          {
-            "useBuiltIns": "entry"
-          }
-        ]
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "entry"
+        }
+      ]
     ]
   },
   "browserslist": [

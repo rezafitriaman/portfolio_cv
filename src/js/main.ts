@@ -1,20 +1,3 @@
-/*import { sayHello } from "./greet";
-import { sayMaster } from "./greetTwo";
-
-function showHello(divName: string, name: string) {
-    const elt = document.getElementById(divName);
-    elt.innerText = sayHello(name);
-}
-
-function whoMaster(id: string, name: string) {
-  // body...
-  const elm = document.getElementById(id);
-  elm.innerText = sayMaster(name);
-}
-
-showHello("greeting", "reza");
-whoMaster("master", " the Master");*/
-
 import {TimelineLite, TweenLite, TweenMax, Ease, Bounce, Elastic, Back, Power1, Power2, Power3, Power4 } from "gsap";
 
 document.addEventListener('DOMContentLoaded', (event) => {

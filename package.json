@@ -35,7 +35,7 @@
     "browser-sync": "^2.26.3",
     "browserify": "^16.2.3",
     "del": "^5.1.0",
-    "gsap": "^2.0.2",
+    "gsap": "^3.6.0",
     "gulp": "^4.0.0",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-image": "^4.4.1",
